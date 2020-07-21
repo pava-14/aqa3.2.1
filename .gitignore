@@ -45,5 +45,7 @@ out/
 !**/src/test/**
 
 ### App ###
+!src/test/java/ru/netology/data/**
+./data/
 !app-deadline.jar
 !**/initdb/**
