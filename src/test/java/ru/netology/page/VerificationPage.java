@@ -2,7 +2,7 @@ package ru.netology.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import ru.netology.data.DataHelper;
+import ru.netology.data.DbHelper;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.page;
@@ -15,7 +15,7 @@ public class VerificationPage {
         codeField.waitUntil(Condition.visible, 15000);
     }
 
-    public DashboardPage validVerify(DataHelper.VerificationCode verificationCode) {
+    public DashboardPage validVerify(DbHelper.VerificationCode verificationCode) {
         codeField.setValue(verificationCode.getCode());
         verifyButton.click();
         return page(DashboardPage.class);

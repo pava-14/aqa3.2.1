@@ -2,7 +2,7 @@ package ru.netology.test;
 
 import lombok.val;
 import org.junit.jupiter.api.Test;
-import ru.netology.data.DataHelper;
+import ru.netology.data.DbHelper;
 import ru.netology.page.DashboardPage;
 import ru.netology.page.LoginPage;
 
@@ -12,9 +12,9 @@ public class MoneyTransferTest {
 
     private DashboardPage openDashboard() {
         val loginPage = open("http://localhost:9999", LoginPage.class);
-        val authInfo = DataHelper.getAuthInfo();
+        val authInfo = DbHelper.getAuthInfo();
         val verificationPage = loginPage.validLogin(authInfo);
-        val verificationCode = DataHelper.getVerificationCode();
+        val verificationCode = DbHelper.getVerificationCode();
         return verificationPage.validVerify(verificationCode);
     }
 
