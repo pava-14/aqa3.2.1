@@ -2,6 +2,9 @@
 
 ## Краткое описание
 
+Для запуска SUT используется файл app-start.cmd, в котором, после окончания рабоботы SUT выполняется удаление всех 
+записей таблиц users и cards. Это позволяет запускать SUT многокоатно.
+
 ```
 String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
 PreparedStatement stmt = con.prepareStatement(sql);
