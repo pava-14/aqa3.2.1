@@ -21,15 +21,17 @@ public class LoginPage {
         return page(VerificationPage.class);
     }
 
-    public void invalidLogin(DbHelper.AuthInfo info) {
+    public void invalidLogin() {
+
         loginField.doubleClick();
         loginField.sendKeys(Keys.BACK_SPACE);
-        loginField.setValue(info.getLogin());
-        passwordField.doubleClick();
-        passwordField.sendKeys(Keys.BACK_SPACE);
-        passwordField.setValue(info.getPassword());
-        loginButton.click();
-        $(withText("Неверно указан логин или пароль")).waitUntil(visible, 15000);
+        loginField.setValue(DbHelper.generateAuthInfo().getLogin());
+        for (int i = 0; i < 5; i++) {
+            passwordField.doubleClick();
+            passwordField.sendKeys(Keys.BACK_SPACE);
+            passwordField.setValue(DbHelper.generateAuthInfo().getPassword());
+            loginButton.click();
+        }
+        $(withText("Неверно")).waitUntil(visible, 15000);
     }
-
 }

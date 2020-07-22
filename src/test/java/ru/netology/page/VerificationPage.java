@@ -2,6 +2,7 @@ package ru.netology.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.Keys;
 import ru.netology.data.DbHelper;
 
 import static com.codeborne.selenide.Condition.visible;
@@ -21,11 +22,5 @@ public class VerificationPage {
         codeField.setValue(verificationCode.getCode());
         verifyButton.click();
         return page(DashboardPage.class);
-    }
-
-    public void invalidVerify(DbHelper.VerificationCode verificationCode) {
-        codeField.setValue(verificationCode.getCode());
-        verifyButton.click();
-        $(withText("Неверно указан код!")).waitUntil(visible, 15000);
     }
 }

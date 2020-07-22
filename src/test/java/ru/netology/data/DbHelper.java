@@ -54,7 +54,7 @@ public class DbHelper {
     public static AuthInfo generateAuthInfo() {
         Faker faker = new Faker(new Locale("ru"));
         return new AuthInfo(
-                faker.name().username(),
+                faker.name().username().replace(".", ""),
                 faker.internet().password()
         );
     }
