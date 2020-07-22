@@ -1,8 +1,11 @@
 package ru.netology.page;
 
 import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.Keys;
 import ru.netology.data.DbHelper;
 
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.page;
 
@@ -17,4 +20,16 @@ public class LoginPage {
         loginButton.click();
         return page(VerificationPage.class);
     }
+
+    public void invalidLogin(DbHelper.AuthInfo info) {
+        loginField.doubleClick();
+        loginField.sendKeys(Keys.BACK_SPACE);
+        loginField.setValue(info.getLogin());
+        passwordField.doubleClick();
+        passwordField.sendKeys(Keys.BACK_SPACE);
+        passwordField.setValue(info.getPassword());
+        loginButton.click();
+        $(withText("Неверно указан логин или пароль")).waitUntil(visible, 15000);
+    }
+
 }
