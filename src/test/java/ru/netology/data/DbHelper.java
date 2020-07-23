@@ -58,4 +58,16 @@ public class DbHelper {
                 faker.internet().password()
         );
     }
+
+    public static void ClearAuthCodesTable() throws SQLException {
+        val deleteAuthCodeSQL = " DELETE FROM auth_codes;";
+        val runner = new QueryRunner();
+        try (
+                val conn = DriverManager.getConnection(
+                        "jdbc:mysql://localhost:3306/app", "app", "pass"
+                )
+        ) {
+            runner.execute(conn, deleteAuthCodeSQL, new ScalarHandler<>());
+        }
+    }
 }

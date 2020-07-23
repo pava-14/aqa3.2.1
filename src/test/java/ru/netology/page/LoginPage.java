@@ -22,11 +22,10 @@ public class LoginPage {
     }
 
     public void invalidLogin() {
-
-        loginField.doubleClick();
-        loginField.sendKeys(Keys.BACK_SPACE);
-        loginField.setValue(DbHelper.generateAuthInfo().getLogin());
         for (int i = 0; i < 5; i++) {
+            loginField.doubleClick();
+            loginField.sendKeys(Keys.BACK_SPACE);
+            loginField.setValue(DbHelper.generateAuthInfo().getLogin());
             passwordField.doubleClick();
             passwordField.sendKeys(Keys.BACK_SPACE);
             passwordField.setValue(DbHelper.generateAuthInfo().getPassword());

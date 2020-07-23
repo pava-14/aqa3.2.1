@@ -1,6 +1,7 @@
 package ru.netology.test;
 
 import lombok.val;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import ru.netology.data.DbHelper;
 import ru.netology.page.DashboardPage;
@@ -11,6 +12,11 @@ import java.sql.SQLException;
 import static com.codeborne.selenide.Selenide.open;
 
 public class FrontendTest {
+
+    @AfterAll
+    public static void PostConditions() throws SQLException {
+        DbHelper.ClearAuthCodesTable();
+    }
 
     @Test
     public void openDashboardWithValidAuthInfo() {
@@ -27,7 +33,7 @@ public class FrontendTest {
     }
 
     @Test
-    public void shouldOpenDashboardWithInvalidAuthInfoWithThreeRepeat() {
+    public void shouldNotBlockedWithInvalidPasswordAfterThreeAttempts() {
         val loginPage = open("http://localhost:9999", LoginPage.class);
         loginPage.invalidLogin();
     }
