@@ -2,39 +2,36 @@ package ru.netology.test;
 
 import lombok.val;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.data.DbHelper;
 import ru.netology.page.DashboardPage;
 import ru.netology.page.LoginPage;
 
-import java.sql.SQLException;
-
 import static com.codeborne.selenide.Selenide.open;
 
 public class FrontendTest {
+    private LoginPage loginPage;
+
+    @BeforeEach
+    public void openPage() {
+        loginPage = open("http://localhost:9999", LoginPage.class);
+    }
 
     @AfterAll
-    public static void PostConditions() throws SQLException {
-        DbHelper.ClearAuthCodesTable();
+    public static void postConditions() {
+        DbHelper.clearAuthCodesTable();
     }
 
     @Test
     public void openDashboardWithValidAuthInfo() {
-        val loginPage = open("http://localhost:9999", LoginPage.class);
         val authInfo = DbHelper.getValidAuthInfo();
         val verificationPage = loginPage.validLogin(authInfo);
-        DbHelper.VerificationCode verificationCode = null;
-        try {
-            verificationCode = DbHelper.getVerificationCode(authInfo);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        DashboardPage page = verificationPage.validVerify(verificationCode);
+        DashboardPage page = verificationPage.validVerify(DbHelper.getVerificationCode(authInfo));
     }
 
     @Test
     public void shouldNotBlockedWithInvalidPasswordAfterThreeAttempts() {
-        val loginPage = open("http://localhost:9999", LoginPage.class);
         loginPage.invalidLogin();
     }
 }
